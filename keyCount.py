@@ -2,7 +2,7 @@
 #引入正则表达式\sys等包
 import re,sys
 
-#设定关键词字典
+#设定关键词字
 keyWords = ['auto','break','case','char','const','continue','default','do',
             'double','else','enum','extern','float','for','goto','if','int',
             'long','register','return','short','signed','sizeof','static',
