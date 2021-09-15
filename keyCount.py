@@ -16,7 +16,7 @@ import re
 import sys
 
 # 版本、作者声明
-__version__ = '0.1'
+__version__ = '0.1.1'
 __author__ = 'Zeyuan Qiu'
 
 # 初始化 输出格式数量
