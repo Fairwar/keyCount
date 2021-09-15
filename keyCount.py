@@ -128,13 +128,13 @@ def final_print(mode):
     if mode >= 3:
         print('\nif-else num:',if_else_count)
     if mode >= 4:
-        print('if-elif-else num:',if_elif_else_count)
+        print('if-elseif-else num:',if_elif_else_count)
 
 if __name__ == "__main__":
     # 读入目标地址信息 dataPath 和检索模式 mode
     # 读入参数 文件名 dataPath 和 难度 mode
     path, mode = sys.argv[1:3]
     mode = int(mode)
-    PARAGRAPH = data_pretreatment(path) #调用文件预处理函数
-    keyword_process(PARAGRAPH)
-    final_print(mode)
+    PARAGRAPH = data_pretreatment(path) # 调用文件预处理函数
+    keyword_process(PARAGRAPH)  # 调用关键字处理函数
+    final_print(mode)   # 调用结果输出函数

@@ -28,9 +28,10 @@
 		* [关键词处理](#关键词处理)
 		* [输出](输出)
 ## 编程规范
-Python 个人编码规范，参考 [PEP-8](https://www.python.org/dev/peps/pep-0008/) 规范建立
+Python 个人编码规范，参考 [**PEP8**](https://www.python.org/dev/peps/pep-0008/) 规范建立
  
 ###  缩进规范
+一个缩进级别使用四个空格（一个tab）
 
 ###  变量命名
 
