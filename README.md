@@ -156,7 +156,7 @@ ___________________
         		                if_else_count +=  1
 		```
 	4. #### **输出模式**
-		><font color='OrangeRed'>**问：**</font>如何不适用循环打印出列表且不带方括号?
+		><font color='OrangeRed'>**问：**</font>如何不适用循环打印出列表且不带方括号?  
 		<font color='CornflowerBlue'>**答：**</font>print(*ListName, seq=' ')
 		```python
 		def final_print(mode):
