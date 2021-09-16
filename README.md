@@ -136,7 +136,8 @@ ___________________
 	                	if_stack.append('if')
 			
 			        elif word == 'else' :   			# 出现 else
-					    if data_listed[i+1] == 'if':   	# 出现 elseif
+
+					    if data_listed[i+1] == 'if':   	# 当为 elseif
 		                    if_stack.append('elif')  	# 压栈 elif
         		            key_count = key_count + 1  	# 计数下一个 if 
                 		    data_iter.__next__()  		# 跳过下一个 if
@@ -161,18 +162,18 @@ ___________________
 		```python
 		def final_print(mode):
     	if mode >= 1:
-        	print("total num:",key_count)
+        	print("total num:", key_count)
     	if mode >= 2:
-    	    print("switch num:",switch_count)
-    	    print("case num:",end=' ')
+    	    print("switch num:", switch_count)
+    	    print("case num:", end=' ')
     	    if switch_count > 0:
                print(*case_count, sep=' ') 
         	else:
             	print(0)
 	    if mode >= 3:
-        	print('if-else num:',if_else_count)
+        	print('if-else num:', if_else_count)
 	    if mode >= 4:
-    	    print('if-elseif-else num:',if_elif_else_count)
+    	    print('if-elseif-else num:', if_elif_else_count)
 		```
 
 + ### **性能分析**
