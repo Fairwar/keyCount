@@ -73,7 +73,11 @@ ___________________
 
 		# 初始化关键字元组 KEYWORDS
 		KEYWORDS = (
-		'auto', 'break', 'case', 'char'，'const', 'continue','default','do', 'double', 'else', 'enum', 'extern','float', 'for', 'goto','if', 'int', 'long', 'register', 'return', 'short', 'signed','sizeof', 'static','struct', 'switch', 'typedef', 'union', 'unsigned', 'void', 'volatile', 'while'
+				    'auto', 'break', 'case', 'char', 'const', 'continue','default',
+				    'do', 'double', 'else', 'enum', 'extern','float', 'for', 'goto',
+				    'if', 'int', 'long', 'register', 'return', 'short', 'signed',
+				    'sizeof', 'static','struct', 'switch', 'typedef', 'union', 
+				    'unsigned', 'void', 'volatile', 'while'
 		)
 		```
 	2. #### **文本预处理**
@@ -119,9 +123,9 @@ ___________________
 
         		if word != '' and word in KEYWORDS:  # 判断是否为关键词
 
-        		    key_count = key_count + 1  	# 是关键词则 key_count++
+        			key_count = key_count + 1  	# 是关键词则 key_count++
 
-		            if word == 'switch':  		# 若为 switch 则 switch_count++ 
+		        	if word == 'switch':  		# 若为 switch 则 switch_count++ 
         		        switch_count = switch_count + 1 
                 		case_count.append(0)  	# 且 case_count 增加一个元素
             
