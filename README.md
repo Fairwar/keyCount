@@ -133,7 +133,7 @@ ___________________
         		        case_count[-1] += 1		# case_count 对应元素加1
 
         		    elif word == 'if':   		# 若是 if 则压入堆栈
-	                if_stack.append('if')
+	                	if_stack.append('if')
 			
 			        elif word == 'else' :   			# 出现 else
 					    if data_listed[i+1] == 'if':   	# 出现 elseif
