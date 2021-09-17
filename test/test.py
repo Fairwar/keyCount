@@ -16,7 +16,7 @@ import re
 import sys
 
 # 版本、作者声明
-__version__ = '0.1.3'
+__version__ = '0.1.1'
 __author__ = 'Zeyuan Qiu'
 
 # 初始化 输出格式数量
@@ -33,7 +33,7 @@ KEYWORDS = (
     'do', 'double', 'else', 'enum', 'extern','float', 'for', 'goto',
     'if', 'int', 'long', 'register', 'return', 'short', 'signed',
     'sizeof', 'static','struct', 'switch', 'typedef', 'union', 
-    'unsigned', 'void', 'volatile', 'while',
+    'unsigned', 'void', 'volatile', 'while'
 )
 
 # 文件预处理函数
@@ -44,14 +44,13 @@ def data_pretreatment(data_path):
 	"""
     data = open(data_path, mode='r').read() # 读取 data_path 指向文件
 
-    data_shorted = re.sub(r"\/\*([^\*^\/]*|[\*^\/*]*|[^\**\/]*)*\*\/", "", data)    # 删除注释块
+    data_shorted = re.sub(r"\/\*([^\*^\/]*|[\*^\/*]*|[^\**\/]*)*\*\/",
+                          "", data)    # 删除注释块
     data_shorted = re.sub(r'\/\/[^\n]*', "", data_shorted)     # 删除注释行
     data_shorted = re.sub(r"\"(.*)\"", "", data_shorted)        # 删除字符串
-    data_shorted = re.sub(r" +"," ",data_shorted)    #缩减多余空格
-    data_listed = re.split(r"\W", data_shorted)   # 
+    data_shorted = re.sub(r" +"," ",data_shorted)    # 缩减多余空格
+    data_listed = re.split(r"\W", data_shorted)   # 转化为列表
     
-    print(data_listed)
-
     return data_listed  # 返回经过预处理的 data_listed
 
 # 关键字处理函数
@@ -69,10 +68,11 @@ def keyword_process(data_listed):
     global if_elif_else_count
     global if_stack
 
-    elseif_flag=False
-
-    for index,word in enumerate(data_listed):
+    data_iter = iter(range(len(data_listed)))   # 生成数据列表迭代器
+    for i in data_iter:
         
+        word = data_listed[i]
+
         if word != '' and word in KEYWORDS:  # 判断是否为关键词
 
             key_count +=  1   # 是关键词则 key_count++
@@ -89,17 +89,27 @@ def keyword_process(data_listed):
             elif word == 'if':          # 若是 if 则压入堆栈
                 if_stack.append('if')
 
+            elif word == 'else' :       # 若出现 else
 
-            elif word == 'else' and \
-                 data_listed[index+1] == "if":   # 若出现 elseif
-                elseif_flag = True
-                if_stack.append('elseif')
-                key_count += 1
-            
-
-
+                if data_listed[i+1] == 'if':    # 当为 elseif
+                    if_stack.append('elif')     # 压栈 elif
+                    key_count = key_count + 1   # 计数下一个 if 
+                    data_iter.__next__()        # 跳过下一个 if
                 
-                
+                else :                  # 若只是 else
+
+                    elifFlag = False    # 初始化 elifFlag 标志
+
+                    while if_stack[-1] == "elif":
+                        elifFlag =True
+                        if_stack.pop()  # elif 出栈
+                    if_stack.pop()      # 当前 else 对应 if 出栈
+
+                    if elifFlag :   # 判断为 if_else 或 if_elif_else
+                        if_elif_else_count += 1
+                    else :
+                        if_else_count += 1
+
 # 输出函数
 def final_print(mode):
     if mode >= 1:
