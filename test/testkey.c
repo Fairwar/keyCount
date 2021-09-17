@@ -25,15 +25,14 @@ int main(){
         if(i<-1){}
         else{}
     }
-    else if(i>0){
+    else if(i>0)
         if (i>2){}
         else if (i==2) {}
         else if (i>1) {}
         else {}
-    }
-    else{
-        if(j!=0){}
+    else
+if(j!=0){}
         else{}
-    }
+    
     return 0;
 }
