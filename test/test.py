@@ -37,7 +37,7 @@ KEYWORDS = (
 )
 
 # 文件预处理函数
-def data_pretreatment(data_path):
+def data_pretreat(data_path):
     """
     	传入 文件路径参数 data_path
 	    返回 经预处理列表 data_listed
@@ -133,6 +133,6 @@ if __name__ == "__main__":
     # 读入参数 文件名 dataPath 和 难度 mode
     path, print_mode = sys.argv[1:3]
     print_mode = int(print_mode)
-    PARAGRAPH = data_pretreatment(path) # 调用文件预处理函数
+    PARAGRAPH = data_pretreat(path) # 调用文件预处理函数
     keyword_process(PARAGRAPH)  # 调用关键字处理函数
     final_print(print_mode)   # 调用结果输出函数
