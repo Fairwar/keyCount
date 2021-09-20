@@ -80,7 +80,7 @@ def keyword_process(data_listed):
             key_count +=  1   # 是关键词则 key_count++
 
             if word == 'switch':        # 若为 switch 则 switch_count++ 
-                switch_count +=  1 
+                switch_count += 1 
                 case_count.append(0)    # 且 case_count 增加一个元素
 
             
