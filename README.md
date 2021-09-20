@@ -10,39 +10,40 @@
 # **目录**
 * [keyCount 作业过程](#keyCount作业过程)
 	* [PSP表格](#PSP表格)
-	* [需求分析](#需求分析)
+	* [需求分析&解题思路](#需求分析&解题思路)
 	* [代码迭代](#代码迭代)
 		* [参数输入](#参数输入)
 		* [文本预处理](#文本预处理)
 		* [关键词处理](#关键词处理)
 		* [输出](输出)
 	* [性能分析](#性能分析)
-		* [单元测试](#单元测试)
+		* [样例结果&单元测试](#样例结果&单元测试)
 		* [运行时间](#运行时间)
 	* [困难及新获知识](#困难及新获知识)
 		* [正则表达式](#正则表达式)
 
 
 # **keyCount作业过程**
-#  PSP表格
+# PSP表格
+
 | Personal Software Process Stages | 预估耗时(分钟) | 实际耗时(分钟) |
-| -------------------------------- | ------------- | ------------- |
+ :- | :-: | :-:
 | Planning（计划）|  |  |
-| Estimate（估计时间） |  |  |
+| · Estimate（估计时间） | - | - |
 | Development（开发） |  |  |
-| Analysis（需求分析（包括学习新技术）） |  |  |
-| Design Spec（生成设计文档） |  |  |
-| Design Review（设计复审） |  |  |
-| Coding Standard（代码规范 ） |  |  |
-| Design（具体设计） |  |  |
-| Coding（具体编码） |  |  |
-| Code Review（代码复审） |  |  |
-| Test（测试（自我测试，修改代码，提交修改）） |  |  |
-| Test Report（测试报告） |  |  |
-| Size Measurement（计算工作量） |  |  |
-| Postmortem & Process Improvement Plan（事后总结, 并提出过程改进计划） |  |  |
-| Total（合计） |  |  |
-#  需求分析  
+| · Analysis（需求分析&学习新知识） | 180 | 300 |
+| · Design Spec（生成设计文档） | - | - |
+| · Design Review（设计复审） | - | - |
+| · Coding Standard（代码规范 ） | 120 | 120 |
+| · Design（具体设计） | - | - |
+| · Coding（具体编码） | 60 | 80 |
+| · Code Review（代码复审） | 20 | 30 |
+| Test（测试） | 10 | 10 |
+| · Test Report（测试报告） | 15 | 20 |
+| · Size Measurement（计算工作量） | - | - |
+| · Postmortem & Process Improvement Plan<br>（事后总结, 并提出过程改进计划） | 60 | 120 |
+| Total（合计） | 465 | 680 |
+#  需求分析&解题思路  
 ### 输入格式：python keyCount.py key.c mode  
 > + 需进行 ***提取输入信息、进行文件获取、文本化、文本预处理***    
 > + 将文本内容预处理为列表
@@ -60,6 +61,8 @@
 # 代码迭代
 >&#160; &#160; &#160; &#160;刚开始的时候未考虑到被编程规范等要求，虽能实现其功能，但较为杂乱无章，第二天紧急补课了编程规范后对程序进行了一轮大改，将其从一段一团乱麻拯救成井然有序的面向函数，限于 markdown 能力有待提高，部分格式还未能完全在下方展示出
 ## **初始化参数**
+>建立初始化计数变量、if&elseif堆栈、关键字词典
+
 ```python
 # 初始化计数变量 count
 key_count = 0
@@ -81,10 +84,13 @@ KEYWORDS = (
 )
 ```
 ## **文本预处理**
->&#160; &#160; &#160; &#160;考虑到可能存在有 ***冗余空格*** 对 elseif 判断逻辑的干扰，在第 0.1.2 版本中增加了缩减冗余不可见字符  
-&#160; &#160; &#160; &#160;考虑到可能存在有 ***注释、字符串*** 对 关键词计数的干扰，在第 0.1.3 版本中增加了 删除注释块、删除注释行、删除字符串功能
+
+>&#160; &#160; &#160; &#160;读入文件并不能直接被关键字处理函数接受，通过预处理剔除无关字符，并将其分裂为列表   
+&#160; &#160; &#160; &#160;考虑到可能存在有 <font color='pink'>***冗余空格***</font> 对 elseif 判断逻辑的干扰，在第 0.1.2 版本中增加了缩减冗余不可见字符  
+&#160; &#160; &#160; &#160;考虑到可能存在有 <font color='pink'>***「注释、字符串」***</font> 对 关键词计数的干扰，在第 0.1.3 版本中增加了 删除注释块、删除注释行、删除字符串功能    
+&#160; &#160; &#160; &#160;考虑到可能存在有 <font color='pink'>***「char a=‘ ” ’ 单字符」***</font> 对 关键词计数的干扰，在第 0.1.4 版本中增加了 删除 '"'(即 「"」的单字符)功能 
 ```python
-# 文件预处理关键函数
+# 文件预处理重点
 data_shorted = re.sub(r"\/\*([^\*^\/]*|[\*^\/*]*|[^\**\/]*)*\*\/",
                           "", data)    # 删除注释块
 data_shorted = re.sub(r"\/\/[^\n]*", "", data_shorted)      # 删除注释行
@@ -95,91 +101,74 @@ data_shorted = re.sub(r"[\n]+","  ",data_shorted)           # 改回车为双空
 data_listed = re.split(r"\W", data_shorted)   # 转化为列表
 ```
 ## **关键词处理**
->&#160; &#160; &#160; &#160;这个函数写得比较一气呵成，逻辑上没有出现问题，由于该函数较长，进行程序规范化修改过程程中花费时间较长，给我敲响了警钟。  
-&#160; &#160; &#160; &#160;实现方法上而言并无困难，过程中也是重温了一下 Python 的一些基础语法，同时也解决了一些之前学习 Python 时遇到的小困惑：  
->
+>&#160; &#160; &#160; &#160;这个函数写得比较一气呵成，逻辑上没有出现问题，由于该函数较长，进行程序规范化修改过程中花费时间较长，给我敲响了警钟。实现方法上而言并无困难，过程中也是重温了一下 Python 的一些基础语法，同时也解决了一些之前学习 Python 时遇到的小困惑。  
+
 ><font color='OrangeRed'>**问：**</font>只有一个元素的列表可以索引<font color='OrangeRed'>**[-1]**</font>吗？  
 <font color='CornflowerBlue'>**答：**</font>可以，同样索引倒数第一个元素，在只有一个元素的列表中索引的就是唯一那个元素。 
 
 ```python
-# 关键字处理函数
-def keyword_process(data_listed):
-    """
-		输入 待处理列表 data_listed
-        返回 无
-    """
-
-	#使用全局变量声明
-	global key_count
-	global switch_count
-    global case_count
-    global if_else_count
-    global if_elif_else_count
-    global if_stack
-
-    data_iter = iter(range(len(data_listed)))  # 生成数据列表迭代器
-    for i in data_iter:
-        
-    	word = data_listed[i]
-
-    	if word != '' and word in KEYWORDS:  # 判断是否为关键词
-
-        	key_count = key_count + 1  	# 是关键词则 key_count++
-
-	    	if word == 'switch':  		# 若为 switch 则 switch_count++ 
-        		        switch_count = switch_count + 1 
-        		case_count.append(0)  	# 且 case_count 增加一个元素  
+# 关键字处理重点
+if word == 'switch':  		# 若为 switch 则 switch_count++ 
+    switch_count = switch_count + 1 
+    case_count.append(0)  	# 且 case_count 增加一个元素  
             
-            elif word == 'case':		# 若是 case
-		        case_count[-1] += 1		# case_count 对应元素加1
+elif word == 'case':		# 若是 case
+	case_count[-1] += 1		# case_count 对应元素加1
 
-        	elif word == 'if':   		# 若是 if 则压入堆栈
-	            if_stack.append('if')
+elif word == 'if':   		# 若是 if 则压入堆栈
+	if_stack.append('if')
 
-			elif word == 'else' :   			# 出现 else
+elif word == 'else' :   			# 出现 else
 
-				if data_listed[i+1] == 'if':   	# 当为 elseif
-		            if_stack.append('elif')  	# 压栈 elif
-        		    key_count = key_count + 1  	# 计数下一个 if 
-                	data_iter.__next__()  		# 跳过下一个 if
+	if data_listed[i+1] == 'if':   	# 当为 elseif
+		if_stack.append('elif')  	# 压栈 elif
+        key_count = key_count + 1  	# 计数下一个 if 
+        data_iter.__next__()  		# 跳过下一个 if
 
-                else :  # 若只是 else
+    else :  # 若只是 else
 
-                    elifFlag = False  	# 初始化 elifFlag 标志
+        elifFlag = False  	# 初始化 elifFlag 标志
 
-		            while if_stack[-1] == "elif":
-        		        elifFlag =True
-                		if_stack.pop()  # elif 出栈
-		            if_stack.pop()  	# if 出栈
+		while if_stack[-1] == "elif":
+        	elifFlag =True
+            if_stack.pop()  # elif 出栈
+			if_stack.pop()  	# if 出栈
 
-        		    if elifFlag :   	# 根据 elifFlag 增加计数
-                		if_elif_else_count += 1
-		            else :
-        		        if_else_count +=  1
+        	if elifFlag :   	# 根据 elifFlag 增加计数
+                if_elif_else_count += 1
+		    else :
+		        if_else_count +=  1
 ```
 ## **输出模式**
 ><font color='OrangeRed'>**问：**</font>如何不适用循环打印出列表且不带方括号?  
 <font color='CornflowerBlue'>**答：**</font>print(*ListName, seq=' ')
+
 ```python
 def final_print(mode):
-if mode >= 1:
-    print("total num:", key_count)
-if mode >= 2:
-    print("switch num:", switch_count)
-    print("case num:", end=' ')
-    if switch_count > 0:
-        print(*case_count, sep=' ') 
-    else:
-        print(0)
-if mode >= 3:
-    print('if-else num:', if_else_count)
-if mode >= 4:
-    print('if-elseif-else num:', if_elif_else_count)
+	if mode >= 1:
+    	print("total num:", key_count)
+	if mode >= 2:
+    	print("switch num:", switch_count)
+    	print("case num:", end=' ')
+    	if switch_count > 0:
+        	print(*case_count, sep=' ') 
+    	else:
+        	print(0)
+	if mode >= 3:
+    	print('if-else num:', if_else_count)
+	if mode >= 4:
+    	print('if-elseif-else num:', if_elif_else_count)
 ```
 
 # 性能分析
-## 单元测试
-## 运行时间
+## 样例结果&单元测试
+>&#160; &#160; &#160; &#160;测试用例使用老师给出 key.c，并进行了一定修改，包含有 “代码换行不规范”（甚至完全不换行）、“代码不安规范缩进”（包括全部代码贴边写），“char字符有「"」”等各类特殊情况，对于覆盖率高达 <font color="orangered">99%</font> 还是有点小兴奋的。   
 
+![image](./image/coverage_report.png)
+
+## 运行时间
 # 困难及新获知识
-### 正则表达式
+>&#160; &#160; &#160; &#160;本次编程学习过程中主要遇到了三个问题。    
+&#160; &#160; &#160; &#160;首先是规范化编程意识不强，导致编码一会，改码半天的情况，最初的代码又丑又不利于维护，根据PEP8编码规范形成自己的风格后终于使得代码可以拿出来见人了，也方便检查代码纰漏。    
+>&#160; &#160; &#160; &#160;其次就是认识到准确理解客户需求的重要性，如果曲解或者一知半解地开始编码，很多时候只是在做无用功，比如我想了一两个晚上没有else的情况下如何判断if-else和if-elseif-else的结束。    
+>&#160; &#160; &#160; &#160;最后也是最重要的，要熟练使用好已经有的工具，Python 是是一个功能强大的编程语言，本身携带的包和工具已经足以实现大多数功能，本次编程中就使用到了 re 正则表达式包。
