@@ -10,6 +10,7 @@
 # **目录**
 * [keyCount 作业过程](#keyCount作业过程)
 	* [PSP表格](#PSP表格)
+	* [commits信息](#commits信息)
 	* [需求分析&解题思路](#需求分析&解题思路)
 	* [代码迭代](#代码迭代)
 		* [参数输入](#参数输入)
@@ -43,6 +44,10 @@
 | · Size Measurement（计算工作量） | - | - |
 | · Postmortem & Process Improvement Plan<br>（事后总结, 并提出过程改进计划） | 60 | 120 |
 | Total（合计） | 465 | 680 |
+
+# commits信息
+![image](./image/commits_message.png)
+
 #  需求分析&解题思路  
 ### 输入格式：python keyCount.py key.c mode  
 > + 需进行 ***提取输入信息、进行文件获取、文本化、文本预处理***    
