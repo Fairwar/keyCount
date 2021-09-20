@@ -14,7 +14,6 @@
 # 引入 re、sys 等包
 import re
 import sys
-import time
 
 # 版本、作者声明
 __version__ = '0.1.4'
@@ -132,11 +131,8 @@ def final_print(mode):
 if __name__ == "__main__":
     # 读入目标地址信息 dataPath 和检索模式 mode
     # 读入参数 文件名 dataPath 和 难度 mode
-    start = time.time()
     path, print_mode = sys.argv[1:3]
     print_mode = int(print_mode)
     PARAGRAPH = data_pretreat(path) # 调用文件预处理函数
     keyword_process(PARAGRAPH)  # 调用关键字处理函数
     final_print(print_mode)   # 调用结果输出函数
-    end = time.time()
-    print("运行时间：",end-start,"s")
