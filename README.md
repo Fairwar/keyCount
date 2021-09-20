@@ -85,12 +85,14 @@ KEYWORDS = (
 &#160; &#160; &#160; &#160;考虑到可能存在有 ***注释、字符串*** 对 关键词计数的干扰，在第 0.1.3 版本中增加了 删除注释块、删除注释行、删除字符串功能
 ```python
 # 文件预处理关键函数
-data_shorted = re.sub(r"\/\*([^\*^\/]*|[\*^\/*]*|[^\**\/]*)*\*\/","", data)
-# 删除注释块
-data_shorted = re.sub(r'\/\/[^\n]*', "", data_shorted)  # 删除注释行
-data_shorted = re.sub(r"\"(.*)\"", "", data_shorted)  # 删除字符串
-data_shorted = re.sub(r" +"," ",data_shorted)  # 缩减多余空格
-data_listed = re.split(r"\W", data_shorted)  # 转化为列表
+data_shorted = re.sub(r"\/\*([^\*^\/]*|[\*^\/*]*|[^\**\/]*)*\*\/",
+                          "", data)    # 删除注释块
+data_shorted = re.sub(r"\/\/[^\n]*", "", data_shorted)      # 删除注释行
+data_shorted = re.sub(r"\'\"\'","",data_shorted)            # 删除 '"'(即 「"」的单字符)
+data_shorted = re.sub(r"\"(.*)\"", "", data_shorted)        # 删除字符串
+data_shorted = re.sub(r"[ \f\r\t\v]+"," ",data_shorted)     # 缩减多余不可见字符
+data_shorted = re.sub(r"[\n]+","  ",data_shorted)           # 改回车为双空格
+data_listed = re.split(r"\W", data_shorted)   # 转化为列表
 ```
 ## **关键词处理**
 >&#160; &#160; &#160; &#160;这个函数写得比较一气呵成，逻辑上没有出现问题，由于该函数较长，进行程序规范化修改过程程中花费时间较长，给我敲响了警钟。  

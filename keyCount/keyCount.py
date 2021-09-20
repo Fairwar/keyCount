@@ -16,7 +16,7 @@ import re
 import sys
 
 # 版本、作者声明
-__version__ = '0.1.1'
+__version__ = '0.1.4'
 __author__ = 'Zeyuan Qiu'
 
 # 初始化 输出格式数量
@@ -50,7 +50,7 @@ def data_pretreat(data_path):
     data_shorted = re.sub(r"\'\"\'","",data_shorted)            # 删除 '"'(即 「"」的单字符)
     data_shorted = re.sub(r"\"(.*)\"", "", data_shorted)        # 删除字符串
     data_shorted = re.sub(r"[ \f\r\t\v]+"," ",data_shorted)     # 缩减多余不可见字符
-    data_shorted = re.sub(r"[\n]+","  ",data_shorted)           #改回车为双空格
+    data_shorted = re.sub(r"[\n]+","  ",data_shorted)           # 改回车为双空格
     data_listed = re.split(r"\W", data_shorted)   # 转化为列表
 
     return data_listed  # 返回经过预处理的 data_listed
